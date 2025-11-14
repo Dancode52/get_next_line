@@ -1,4 +1,5 @@
-int get_next_line()
-{
+#include <stdio.h>
 
+void get_next_line()
+{
 }
