@@ -6,7 +6,7 @@
 /*   By: dlanehar <dlanehar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 15:12:47 by dlanehar          #+#    #+#             */
-/*   Updated: 2025/11/18 13:31:16 by dlanehar         ###   ########.fr       */
+/*   Updated: 2025/11/21 11:10:25 by dlanehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	while (i < n)
 	{
 		if (((unsigned char *)s)[i] == (unsigned char)c)
-			return ((void *)&s[i]);
+			return ((void *)(s + i));
 		i++;
 	}
 	return (0);
@@ -90,4 +90,30 @@ char	*ft_strdup(const char *s)
 	}
 	ptr[i] = '\0';
 	return (ptr);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*substr;
+	size_t	str_size;
+
+	if (!s)
+		return (NULL);
+	str_size = ft_strlen(s);
+	if (str_size < start)
+	{
+		substr = (char *)malloc(sizeof(char) * 1);
+		if (!substr)
+			return (NULL);
+		substr[0] = '\0';
+		return (substr);
+	}
+	if (len > str_size - start)
+		len = str_size - start;
+	substr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!substr)
+		return (NULL);
+	ft_memcpy(substr, s + start, len);
+	substr[len] = '\0';
+	return (substr);
 }

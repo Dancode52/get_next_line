@@ -6,7 +6,7 @@
 /*   By: dlanehar <dlanehar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 08:43:10 by dlanehar          #+#    #+#             */
-/*   Updated: 2025/11/18 13:57:05 by dlanehar         ###   ########.fr       */
+/*   Updated: 2025/11/21 14:37:25 by dlanehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,41 +35,45 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-// int    main(int ac, char **av)
-// {
-//     char    *next_line;
-//     int        fd;
-// 	(void)ac;
-// 	(void)av;
-
-//  	fd = open("text.txt", O_RDONLY);
-//     if (fd == -1)
-//     {
-//         write(2, "Error reading file.\n", 20);
-//         return (-1);
-//     }
-//     //close(fd);
-//     while (1)
-//     {
-//         next_line = get_next_line(fd);
-//         printf("%s", next_line);
-//         if (!next_line)
-//         {
-//             free(next_line);
-//             break ;
-//         }
-//         free(next_line);
-//     }
-//     close(fd);
-//     return (0);
-// }
-
-int	main()
+int    main(int ac, char **av)
 {
-	int fd;
-	char* out = get_next_line(fd);
+    char    *next_line;
+    int        fd;
+	int i;
+	(void)ac;
+	(void)av;
 
-	fd = open("text.txt", O_RDONLY);
-	printf("%s", out);
-	free(out);
+	i = 0;
+ 	fd = open("text.txt", O_RDONLY);
+    if (fd == -1)
+    {
+        write(2, "Error reading file.\n", 20);
+        return (-1);
+    }
+    //close(fd);
+    while (1)
+    {
+        next_line = get_next_line(fd);
+        printf("%s", next_line);
+        if (!next_line)
+        {
+            free(next_line);
+            break ;
+        }
+        free(next_line);
+		i++;
+    }
+    close(fd);
+    return (0);
 }
+
+// int	main()
+// {
+// 	int fd;
+// 	char* out;
+
+// 	fd = open("text.txt", O_RDONLY);
+// 	out = get_next_line(fd);
+// 	printf("%s", out);
+// 	free(out);
+// }
