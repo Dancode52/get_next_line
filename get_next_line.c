@@ -47,9 +47,26 @@ char *get_next_line(int fd)
 		if (!buf)
 			return (NULL);
 		readsize = read(fd, buf, BUFFER_SIZE);
+		// if (store && store[1] != '\0')
+		// 	{
+		// 		printf("char %i", ft_strlen(store));
+		// 		if (ft_memchr(store, '\n', ft_strlen(store)))
+		// 			{
+		// 				newline = extract_up_to_newline(store);
+		// 				i = ft_strlen(newline);
+		// 				store = ft_substr(store, i, BUFFER_SIZE + 1);
+		// 				// printf("%s", store);
+		// 				return (newline);
+		// 			}
+		// 		if (ft_strlen(store) < 1)
+		// 		{
+		// 			free(store);
+		// 			return (NULL);
+		// 		}
+		// 	}
 		if (readsize == -1)
 			return (NULL);
-		if (readsize == 0)
+		if (readsize == 0 /*&& !buf*/) //need to check for buffsize big. Check to see if store is still full before deciding to leave the function.
 			return (NULL);
 		buf[readsize] = '\0';
 		//store = ft_substr(buf, 0, readsize);
