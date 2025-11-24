@@ -20,6 +20,7 @@ char	*fill_storage(char *buf, char *store, int fd)
 		if (readchars == 0 && (store[0] == 0))
 		{
 			free(buf);
+			free(store);
 			return (NULL);
 		}
 		tmp = ft_strjoin(store, buf);
