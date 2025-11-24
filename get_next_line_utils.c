@@ -6,7 +6,7 @@
 /*   By: dlanehar <dlanehar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 15:12:47 by dlanehar          #+#    #+#             */
-/*   Updated: 2025/11/21 11:10:25 by dlanehar         ###   ########.fr       */
+/*   Updated: 2025/11/24 14:59:50 by dlanehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,66 +54,48 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	ft_memcpy(str, s1, i);
 	ft_memcpy(str + i, s2, j);
-	str[i + j + 1] = '\0';
+	str[i + j] = '\0';
 	return (str);
 }
 
-void	*ft_memchr(const void *s, int c, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n)
-	{
-		if (((unsigned char *)s)[i] == (unsigned char)c)
-			return ((void *)(s + i));
-		i++;
-	}
-	return (0);
-}
-
-char	*ft_strdup(const char *s)
+char	*ft_strchr(const char *s, int c)
 {
 	size_t	i;
 	size_t	len;
-	char	*ptr;
 
 	i = 0;
 	len = ft_strlen(s);
-	ptr = malloc(len * sizeof(char) + 1);
-	if (ptr == NULL)
-		return (NULL);
-	while (i < len)
+	while (i <= len)
 	{
-		ptr[i] = s[i];
+		if (s[i] == (char)c)
+		{
+			return ((char *)&s[i]);
+		}
 		i++;
 	}
-	ptr[i] = '\0';
-	return (ptr);
+	return (NULL);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*substr;
-	size_t	str_size;
+	char			*ptr;
 
 	if (!s)
 		return (NULL);
-	str_size = ft_strlen(s);
-	if (str_size < start)
+	if (start >= ft_strlen(s))
 	{
-		substr = (char *)malloc(sizeof(char) * 1);
-		if (!substr)
+		ptr = (char *)malloc(sizeof(char) * 1);
+		if (!ptr)
 			return (NULL);
-		substr[0] = '\0';
-		return (substr);
+		ptr[0] = '\0';
+		return (ptr);
 	}
-	if (len > str_size - start)
-		len = str_size - start;
-	substr = (char *)malloc(sizeof(char) * (len + 1));
-	if (!substr)
+	if (len > ft_strlen(&s[start]))
+		len = ft_strlen(&s[start]);
+	ptr = malloc(len + 1);
+	if (!ptr)
 		return (NULL);
-	ft_memcpy(substr, s + start, len);
-	substr[len] = '\0';
-	return (substr);
+	ft_memcpy(ptr, s + start, len);
+	ptr[len] = '\0';
+	return (ptr);
 }
