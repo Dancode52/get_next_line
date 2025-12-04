@@ -6,7 +6,7 @@
 /*   By: dlanehar <dlanehar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 08:56:50 by dlanehar          #+#    #+#             */
-/*   Updated: 2025/11/26 10:05:47 by dlanehar         ###   ########.fr       */
+/*   Updated: 2025/12/04 15:55:32 by dlanehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ char	*get_next_line(int fd)
 	char		*buf;
 	char		*newline;
 
+	if (fd < 0 || BUFFER_SIZE < 0 || read(fd, 0, 0) < 0)
+		return (NULL);
 	buf = (char *)malloc(BUFFER_SIZE + 1);
 	newline = fill_storage(buf, store, fd);
 	free(buf);
