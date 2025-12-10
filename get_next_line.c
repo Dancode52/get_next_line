@@ -6,14 +6,14 @@
 /*   By: dlanehar <dlanehar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 08:56:50 by dlanehar          #+#    #+#             */
-/*   Updated: 2025/12/08 15:32:26 by dlanehar         ###   ########.fr       */
+/*   Updated: 2025/12/10 12:56:17 by dlanehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char	*fill_storage(char *buf, char *store, int fd)
+char	*fill_storage(char *buf, char **store, int fd)
 {
 	ssize_t	readchars;
 	char	*tmp;
@@ -22,24 +22,24 @@ char	*fill_storage(char *buf, char *store, int fd)
 	while (readchars > 0)
 	{
 		readchars = read(fd, buf, BUFFER_SIZE);
-		if (readchars == -1 || (store && (readchars == 0 && (store[0] == 0)))
-			|| (readchars == 0 && store == NULL))
+		if (readchars == -1 || (*store && (readchars == 0 && ((*store)[0] == 0)
+			)) || (readchars == 0 && *store == NULL))
 		{
-			free(store);
-			store = NULL;
+			free(*store);
+			*store = NULL;
 			return (NULL);
 		}
 		buf[readchars] = '\0';
-		tmp = ft_strjoin(store, buf);
+		tmp = ft_strjoin(*store, buf);
 		if (!tmp)
 			return (NULL);
-		if (store)
-			free(store);
-		store = tmp;
-		if (ft_strchr(store, '\n'))
+		if (*store)
+			free(*store);
+		*store = tmp;
+		if (ft_strchr(*store, '\n'))
 			break ;
 	}
-	return (store);
+	return (*store);
 }
 
 char	*new_line_trunc(char *newline)
@@ -66,17 +66,15 @@ char	*get_next_line(int fd)
 	char		*buf;
 	char		*newline;
 
-	if (fd < 0 || BUFFER_SIZE < 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
-		if (store)
-		{
+		if (store != NULL)
 			free (store);
-			store = NULL;
-		}
+		store = NULL;
 		return (NULL);
 	}
-	buf = (char *)malloc(BUFFER_SIZE + 1);
-	newline = fill_storage(buf, store, fd);
+	buf = (char *)malloc((size_t)BUFFER_SIZE + 1);
+	newline = fill_storage(buf, &store, fd);
 	free(buf);
 	if (!newline)
 		return (NULL);
