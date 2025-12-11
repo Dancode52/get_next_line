@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlanehar <dlanehar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 08:56:50 by dlanehar          #+#    #+#             */
-/*   Updated: 2025/12/11 10:18:09 by dlanehar         ###   ########.fr       */
+/*   Updated: 2025/12/11 09:58:34 by dlanehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,27 @@ char	*new_line_trunc(char *newline)
 
 char	*get_next_line(int fd)
 {
-	static char	*store;
+	static char	*store[1024];
 	char		*buf;
 	char		*newline;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
 	{
-		if (store)
-			free (store);
-		store = NULL;
+		if (store[fd])
+			free (store[fd]);
+		store[fd] = NULL;
 		return (NULL);
 	}
 	buf = (char *)malloc((size_t)BUFFER_SIZE + 1);
-	newline = fill_storage(buf, &store, fd);
+	newline = fill_storage(buf, &(store)[fd], fd);
 	free(buf);
 	if (!newline)
 		return (NULL);
-	store = new_line_trunc(newline);
+	store[fd] = new_line_trunc(newline);
 	if (fd <= 2)
 	{
-		free(store);
-		store = NULL;
+		free(store[fd]);
+		store[fd] = NULL;
 	}
 	return (newline);
 }
