@@ -6,7 +6,7 @@
 /*   By: dlanehar <dlanehar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 08:56:50 by dlanehar          #+#    #+#             */
-/*   Updated: 2025/12/11 10:18:09 by dlanehar         ###   ########.fr       */
+/*   Updated: 2025/12/16 18:40:24 by dlanehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	buf = (char *)malloc((size_t)BUFFER_SIZE + 1);
+	if (!buf)
+		return (NULL);
 	newline = fill_storage(buf, &store, fd);
 	free(buf);
 	if (!newline)

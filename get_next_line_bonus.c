@@ -6,11 +6,11 @@
 /*   By: dlanehar <dlanehar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 08:56:50 by dlanehar          #+#    #+#             */
-/*   Updated: 2025/12/11 09:58:34 by dlanehar         ###   ########.fr       */
+/*   Updated: 2025/12/16 18:40:35 by dlanehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdio.h>
 
 char	*fill_storage(char *buf, char **store, int fd)
@@ -74,6 +74,8 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	buf = (char *)malloc((size_t)BUFFER_SIZE + 1);
+	if (!buf)
+		return (NULL);
 	newline = fill_storage(buf, &(store)[fd], fd);
 	free(buf);
 	if (!newline)
